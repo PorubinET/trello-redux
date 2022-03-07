@@ -21,16 +21,14 @@ const ListContainer = styled.div`
 
 const TrelloList = ({ title, cards, _id, index, position }) => {
   let [titleText, setTitle] = useState(title);
+
   const dispatch = useDispatch();
 
-  // const lists = useSelector(state => state.listsReducer.lists.map(list => list.cards))
-
-  // console.log(lists, "lists")
 
   const changeTitleText = (e) => {
     setTitle(titleText = e.target.value)
   }
-  
+
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault()

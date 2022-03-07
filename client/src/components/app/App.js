@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import TrelloActionButton from "../TrelloActionButton/TrelloActionButton";
 import { DragDropContext, Droppable } from "react-beautiful-dnd"
 import { useDispatch } from "react-redux"
-import { sort } from "../../actions/actions"
+import { sort } from "../../store/listsSlice"
 import styled from "styled-components"
 import './App.css';
 
@@ -18,47 +18,44 @@ const ListContainer = styled.div`
 
 function App() {
   const dispatch = useDispatch();
-  const lists = useSelector(state => {
-    const { listsReducer } = state;
-    console.log(listsReducer.lists)
-    return listsReducer.lists
-  })
+
+  const lists = useSelector(state => state.lists.lists)
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result
-    console.log(destination, source, draggableId, type)
+    // console.log(destination, source, draggableId, type)
     if (!destination) return;
 
     dispatch(sort(
-      source.droppableId,
-      destination.droppableId,
-      source.index,
-      destination.index,
-      draggableId,
-      type
+      {droppableIdStart: source.droppableId,
+      droppableIdEnd: destination.droppableId,
+      droppableIndexEnd: source.index,
+      droppableIndexStart: destination.index,
+      draggableId: draggableId,
+      type: type}
     ))
   }
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="all-lists" direction="horizontal" type="list">
-          {provided => (
-            <ListContainer {...provided.droppableProps} ref={provided.innerRef}>
-              <Sidebar />
-              {lists.map((list, index) =>
-                <TrelloList
-                  _id={list.listId}
-                  key={list.listId}
-                  title={list.title}
-                  cards={list.cards}
-                  index={index}
-                />
-              )}
-              {provided.placeholder}
-              <TrelloActionButton list />
-            </ListContainer>
-          )}
-        </Droppable>
+      <Droppable droppableId="all-lists" direction="horizontal" type="list">
+        {provided => (
+          <ListContainer {...provided.droppableProps} ref={provided.innerRef}>
+            <Sidebar />
+            {lists.map((list, index) =>
+              <TrelloList
+                _id={list.listId}
+                key={list.listId}
+                title={list.title}
+                cards={list.cards}
+                index={index}
+              />
+            )}
+            {provided.placeholder}
+            <TrelloActionButton list />
+          </ListContainer>
+        )}
+      </Droppable>
     </DragDropContext>
   )
 }

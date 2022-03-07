@@ -1,6 +1,6 @@
 import { useState, React } from "react";
 import { useDispatch } from "react-redux";
-import { addList, addCard} from "../../actions/actions"
+import { addList, addCard} from "../../store/listsSlice"
 import { Button, Icon } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import Card from '@mui/material/Card';
@@ -54,12 +54,12 @@ function TrelloActionButton(props) {
 
     const createList = async (e) => {
         e.preventDefault();
-        dispatch(addList(text))
+        dispatch(addList({text}))
     }
 
     const createCard = async (e) => {
         e.preventDefault();
-        dispatch(addCard(_id, text))
+        dispatch(addCard({_id, text}))
     }
 
     const styles = {

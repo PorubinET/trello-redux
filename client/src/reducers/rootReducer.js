@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { listsReducer } from "./listsReducer";
+import { listsReducer } from "../store/listsReducer";
 
 
 
