@@ -1,0 +1,39 @@
+.cardContainer{
+    margin-bottom: 10px;
+    padding-right: 8px;
+}
+
+.card__text{
+    background-color: transparent;
+    border: 2px solid transparent;
+    max-width: 130px;
+    outline: none;
+    cursor: auto;
+}
+
+.card__text--style{
+    border: 2px solid black;
+    color: black;
+    max-width: 130px;
+    outline: none;
+    cursor: auto;
+}
+
+.card__content{
+    position: relative;
+    cursor: pointer;
+    &:hover{
+        .card__icon{
+            transition: all .4s;
+            opacity: 1;
+        }
+    }
+}
+
+.card__icon{
+    opacity: 0;
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    cursor: pointer;
+}
